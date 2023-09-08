@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="2.munit-before-after.xml-test-suite.xml" />
+	<munit:test name="validateFeeGreaterThan0TestCase" doc:id="1fc2fec5-08d2-4f83-a9ae-16b5e2497fcd" description="Test">
+		<munit:behavior >
+			<set-payload value='#[{&#10;	name:"Nelson",&#10;	hospital:"CUF",&#10;	category:"dermatology",&#10;	availability:"9am-11am",&#10;	fee:"10"&#10;}]' doc:name="Set Payload" doc:id="948b15f1-80ea-4593-965c-b50f53b58bad" />
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getMedicalAppointment" doc:id="51bb725f-44f0-404e-9e40-cda53312d721" name="getMedicalAppointment"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that - fee greater than 0" doc:id="90389afd-df6a-48e2-b976-ebf3da79046b" is="#[MunitTools::greaterThan(0)]" expression="#[payload.fee]"/>
+			<logger level="INFO" doc:name="Log validateFeeGreaterThan0TestCase" doc:id="51a868d3-53a0-4655-ba26-6ea5d0cf0c6f" message="#[payload.fee]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
