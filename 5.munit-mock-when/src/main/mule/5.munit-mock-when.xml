@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getAnimals" doc:id="41d6dc14-1da2-417f-b5c7-5be8f4ac5b82" >
+		<http:listener doc:name="HTTP GET" doc:id="16ac1f38-ac2b-4fc1-8a0d-3f010e5aadda" config-ref="HTTP_Listener_config" path="/mock-when-animals" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="Log BEFORE REQUEST " doc:id="9c8c867f-7bbf-492d-acdf-5408d0c7e93b" message='#["Log BEFORE REQUEST "]'/>
+		<http:request method="GET" doc:name="GET Request" doc:id="e408f69b-7d10-4b3e-8f1f-0247812f978b" config-ref="HTTP_Request_configuration" path="/mock-when-get"/>
+		<logger level="INFO" doc:name="Log AFTER REQUEST" doc:id="43312f6a-1948-4925-a73c-5a16cb2d99ee" message='#["Log AFTER REQUEST"]'/>
+	</flow>
+	<flow name="getAnimalsListPayload" doc:id="42f71aec-1e0d-4d97-a4a5-a4e85386a18e" >
+		<http:listener doc:name="HTTP GET" doc:id="b98bd361-e618-47f1-bc2d-cce8f7276faf" config-ref="HTTP_Listener_8890" path="/mock-when-get" allowedMethods="GET"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"animals": [&#10;		"animal":"dog",&#10;		"animal":"cat"&#10;	]&#10;}]' doc:name="Set Payload - Animals List" doc:id="339689d1-8e41-4bfd-aa3f-ce1fd7a5a94f" />
+		<logger level="INFO" doc:name="Log payload" doc:id="565de08c-4bf8-457d-b193-395688ce8b9b" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"log_inside_request":payload&#10;}]'/>
+	</flow>
+</mule>

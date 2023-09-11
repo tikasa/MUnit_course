@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="5.munit-mock-when-test-suite.xml" />
+	<munit:test name="animalsGETRequestSuccessTestCase" doc:id="cee320bc-7383-4ba8-b603-6b4ceaabcd0e" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when - HTTP GET request" doc:id="5447181e-45f9-4395-8a9a-35d92c4ba44c" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="GET" attributeName="method" />
+					<munit-tools:with-attribute whereValue="GET Request" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="/mock-when-get" attributeName="path" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"animals":[&#10;		"animal":"cow",&#10;		"animal":"pig"&#10;	]&#10;}]' mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getAnimals" doc:id="8e591dc4-21d7-41b3-8d9a-88c36856bcc1" name="getAnimals"/>
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Log VALIDATION PAYLOAD" doc:id="b8366173-dbbd-45fc-974f-351de0327185" message='#[%dw 2.0&#10;output application/json&#10;&#10;---&#10;&#10;{&#10;	"Log VALIDATION PAYLOAD" : payload&#10;}]'/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
