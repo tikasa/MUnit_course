@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="9.munit-expecting-errorsFlow" doc:id="02fe1b15-68ae-4271-9a9f-fea39749bd0e" >
+		<os:store doc:name="Store kye-value pair" doc:id="54f7ee6d-b7a9-446b-861b-797b3a04c41c" key="#[payload.key]">
+			<os:value ><![CDATA[#[payload.value]]]></os:value>
+		</os:store>
+		<logger level="INFO" doc:name="Log END" doc:id="3666c921-a243-48b1-90e8-9d6bbb7b6b1a" message='#["LOG END"]'/>
+	</flow>
+	<flow name="9.munit-expecting-errorsFlow1" doc:id="c1e778c2-cd94-4ae3-999e-4e37f501e462" >
+		<set-variable value="#[payload.firstName default null]" doc:name="Set Variable - firstName" doc:id="d6769ab4-40aa-4dfe-bedf-522b24f34af4" variableName="firstName"/>
+		<ee:transform doc:name="Transform Message" doc:id="fa9cc2fe-76a6-4007-93ac-0751e2c94e3d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Greetings" : "Welcome " ++ vars.firstName
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Log Greetings" doc:id="79ebf534-1e32-4bf0-85e7-c8b68aaa55d8" message="#[payload]"/>
+		<logger level="INFO" doc:name="Log END" doc:id="0030e5e1-5465-4eb8-9e1f-25952e47bf34" message='#["LOG END"]' />
+	</flow>
+</mule>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="9.munit-expecting-errors-test-suite.xml" />
+	<munit:test name="storeKeyValuePairSuccessTestCase" doc:id="5e461e7e-195e-4d31-80fd-96d90608fd18" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event - key is not NULL" doc:id="0b989533-459d-48c4-ad3d-390eb0b7eb7c" >
+				<munit:payload value='#[{&#10;	"key" : "firstName",&#10;	"value" : "Nelson"&#10;}]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to 9.munit-expecting-errorsFlow" doc:id="9702dfe1-f46a-4fff-8694-42573bade50e" name="9.munit-expecting-errorsFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Log storeKeyValuePairSuccessTestCase" doc:id="a0a1fc43-133c-4946-b2e0-173d3f4e0c6c" message='#["storeKeyValuePairSuccessTestCase LOG VALIDATION"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="storeKeyValuePairInsuccessTestCase" doc:id="86ee519f-a5f9-4bc4-b405-6ba79885e341" description="Test" expectedErrorType="MULE:UNKNOWN">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event - key is NULL" doc:id="4e2c08b3-414d-46ec-8232-cf6b8e626cfd" >
+				<munit:payload value='#[{&#10;	"key" : null,&#10;	"value" : "Nelson"&#10;}]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to 9.munit-expecting-errorsFlow" doc:id="8a4bee09-06e4-403e-874e-a5ae6dd8ec5f" name="9.munit-expecting-errorsFlow" />
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Log storeKeyValuePairInsuccessTestCase" doc:id="61b76974-5981-4d6a-a7ce-7bea770bc668" message='#["storeKeyValuePairInsuccessTestCase LOG VALIDATION"]' />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="createGreetingMessageSuccessTestCase" doc:id="91f7b2b9-39f1-44d7-ad82-f9a73f6aa940" description="Test" expectedErrorType="MULE:EXPRESSION">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="aedef339-fee3-4fa4-b4a7-97c571d6a68c" >
+				<munit:payload value='#[{&#10;	"firstName" : "Nelson",&#10;	"lastName" : "Dias"&#10;}]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to 9.munit-expecting-errorsFlow1" doc:id="550d6c89-7947-46e6-b8c5-a1fbb3f865d3" name="9.munit-expecting-errorsFlow1"/>
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Log createGreetingMessageSuccessTestCase" doc:id="a1ae4dc1-5001-4582-bbd3-2a3dab35692a" message='#["createGreetingMessageSuccessTestCase LOG VALIDATION"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="createGreetingMessageInsuccessTestCase" doc:id="2cf79938-bb4f-4f71-ad4c-09e1ce895e26" description="Test" expectedErrorType="MULE:EXPRESSION">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event - firstName is null" doc:id="1498dfe6-6f53-4134-b511-39f8789c94ef">
+				<munit:payload value='#[{&#10;	"firstName" : null,&#10;	"lastName" : "Dias"&#10;}]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to 9.munit-expecting-errorsFlow" doc:id="56e02fc6-5fae-4f84-88b1-a8b58f7c0448" name="9.munit-expecting-errorsFlow1" />
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Log createGreetingMessageInsuccessTestCase" doc:id="6e10464b-8dc1-47e8-a9a6-7bee606afe72" message='#["createGreetingMessageInsuccessTestCase LOG VALIDATION"]' />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
